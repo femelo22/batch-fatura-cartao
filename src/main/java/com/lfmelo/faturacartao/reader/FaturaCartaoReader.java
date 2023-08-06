@@ -19,7 +19,6 @@ public class FaturaCartaoReader implements ItemStreamReader<FaturaCartao>{
 	 *   	Espie a proxima transação e se ela NÃO FOR nula ou for do mesmo cartão da fatura atual, adicione essa transação na fatura atual
 	 */
 	
-	
 	private ItemStreamReader<Transacao> delegate;
 	private Transacao transacaoAtual;
 	
