@@ -26,13 +26,13 @@ public class FaturaCartaoStepConfig {
 	
 	@Bean
 	public Step faturaCartaoStep(
-			ItemReader<FaturaCartao> faturaCartaoReader,
+			ItemReader<FaturaCartao> lerTransacoesReader,
 			ItemProcessor<FaturaCartao, FaturaCartao> carregaDadosClienteProcessor,
 			ItemWriter<FaturaCartao> escreveFaturaCartao) {
 		return stepBuilderFactory
 				.get("faturaCartaoStep")
 				.<FaturaCartao, FaturaCartao>chunk(1)
-				.reader(faturaCartaoReader)
+				.reader(lerTransacoesReader)
 				.processor(carregaDadosClienteProcessor)
 				.writer(escreveFaturaCartao)
 				.build();
