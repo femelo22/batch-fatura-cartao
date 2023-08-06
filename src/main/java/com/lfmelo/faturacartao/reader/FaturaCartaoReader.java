@@ -21,32 +21,28 @@ public class FaturaCartaoReader implements ItemStreamReader<FaturaCartao>{
 	
 	private ItemStreamReader<Transacao> delegate;
 	private Transacao transacaoAtual;
-	
-	
+
 	@Override
 	public FaturaCartao read() throws Exception {
-		if(transacaoAtual == null) {
+		if (transacaoAtual == null)
 			transacaoAtual = delegate.read();
-		}
 		
-		FaturaCartao faturaCartao = null;
+		FaturaCartao faturaCartaoCredito = null;
 		Transacao transacao = transacaoAtual;
 		transacaoAtual = null;
 		
-		if(transacao != null) {
-			faturaCartao = new FaturaCartao();
-			faturaCartao.setCartaoCredito(transacao.getCartaoCredito());
-			faturaCartao.setCliente(transacao.getCartaoCredito().getCliente());
-			faturaCartao.getTransacoes().add(transacao);
+		if (transacao != null) {
+			faturaCartaoCredito = new FaturaCartao();
+			faturaCartaoCredito.setCartaoCredito(transacao.getCartaoCredito());
+			faturaCartaoCredito.setCliente(transacao.getCartaoCredito().getCliente());
+			faturaCartaoCredito.getTransacoes().add(transacao);
 			
-			while(isTransacaoRelacionada(transacao)) {
-				faturaCartao.getTransacoes().add(transacaoAtual);
-			}
+			while (isTransacaoRelacionada(transacao))
+				faturaCartaoCredito.getTransacoes().add(transacaoAtual);
 		}
-		
-		return faturaCartao;
+		return faturaCartaoCredito;
 	}
-	
+
 	private boolean isTransacaoRelacionada(Transacao transacao) throws Exception {
 		return peek() != null && transacao.getCartaoCredito().getNumeroCartao() == transacaoAtual.getCartaoCredito().getNumeroCartao();
 	}
@@ -54,6 +50,10 @@ public class FaturaCartaoReader implements ItemStreamReader<FaturaCartao>{
 	private Transacao peek() throws Exception {
 		transacaoAtual = delegate.read();
 		return transacaoAtual;
+	}
+
+	public FaturaCartaoReader(ItemStreamReader<Transacao> delegate) {
+		this.delegate = delegate;
 	}
 
 	@Override

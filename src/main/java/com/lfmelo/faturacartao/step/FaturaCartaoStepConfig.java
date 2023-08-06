@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.lfmelo.faturacartao.domain.FaturaCartao;
+import com.lfmelo.faturacartao.writer.TotalTransacoesFooterCallback;
 
 @Configuration
 public class FaturaCartaoStepConfig {
@@ -27,14 +28,16 @@ public class FaturaCartaoStepConfig {
 	@Bean
 	public Step faturaCartaoStep(
 			ItemReader<FaturaCartao> lerTransacoesReader,
-			ItemProcessor<FaturaCartao, FaturaCartao> carregaDadosClienteProcessor,
-			ItemWriter<FaturaCartao> escreveFaturaCartao) {
+			ItemProcessor<FaturaCartao, FaturaCartao> carregarDadosClienteProcessor,
+			ItemWriter<FaturaCartao> escreveFaturaCartao,
+			TotalTransacoesFooterCallback listener) {
 		return stepBuilderFactory
 				.get("faturaCartaoStep")
 				.<FaturaCartao, FaturaCartao>chunk(1)
 				.reader(lerTransacoesReader)
-				.processor(carregaDadosClienteProcessor)
+				.processor(carregarDadosClienteProcessor)
 				.writer(escreveFaturaCartao)
+				.listener(listener)
 				.build();
 	}
 
