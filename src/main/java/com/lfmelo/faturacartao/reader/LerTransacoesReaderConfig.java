@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +20,10 @@ import com.lfmelo.faturacartao.domain.Transacao;
 
 @Configuration
 public class LerTransacoesReaderConfig {
+	
+	
+	Logger logger = LogManager.getLogger(LerTransacoesReaderConfig.class.getName());
+	
 	
 	/**
 	 * 
@@ -52,7 +58,7 @@ public class LerTransacoesReaderConfig {
 				transacao.setId(rs.getInt("id"));
 				transacao.setDescricao(rs.getString("descricao"));
 				transacao.setData(rs.getDate("data"));
-				transacao.setValor(rs.getDouble("valor"));
+				transacao.setValor(rs.getDouble("valor"));			
 				
 				return transacao;
 			}

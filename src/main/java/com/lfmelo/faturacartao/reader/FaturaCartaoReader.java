@@ -1,5 +1,7 @@
 package com.lfmelo.faturacartao.reader;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemStreamReader;
@@ -18,6 +20,9 @@ public class FaturaCartaoReader implements ItemStreamReader<FaturaCartao>{
 	 *   peek - Método para espiar a transação:
 	 *   	Espie a proxima transação e se ela NÃO FOR nula ou for do mesmo cartão da fatura atual, adicione essa transação na fatura atual
 	 */
+	
+	Logger logger = LogManager.getLogger(FaturaCartaoReader.class.getName());
+	
 	
 	private ItemStreamReader<Transacao> delegate;
 	private Transacao transacaoAtual;

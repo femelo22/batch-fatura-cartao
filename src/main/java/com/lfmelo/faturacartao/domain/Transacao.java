@@ -53,6 +53,14 @@ public class Transacao {
 	public void setData(Date data) {
 		this.data = data;
 	}
+
+	@Override
+	public String toString() {
+		return "Transacao [id=" + id + ", cartaoCredito=" + cartaoCredito + ", descricao=" + descricao + ", valor="
+				+ valor + ", data=" + data + "]";
+	}
+	
+	
 	
 	
 
