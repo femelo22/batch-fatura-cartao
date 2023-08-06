@@ -33,7 +33,7 @@ public class FaturaCartaoStepConfig {
 			TotalTransacoesFooterCallback listener) {
 		return stepBuilderFactory
 				.get("faturaCartaoStep")
-				.<FaturaCartao, FaturaCartao>chunk(1)
+				.<FaturaCartao, FaturaCartao>chunk(1) // FAZ GERAR 1 ARQUIVO POR CLIENTE (necessário em cenários de multi resources)
 				.reader(lerTransacoesReader)
 				.processor(carregarDadosClienteProcessor)
 				.writer(escreveFaturaCartao)
